@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/logs:/var/log/nginx
+    deploy:
+      replicas: 2
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/logs:/var/log/mysql
+
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo/logs:/var/log/mongodb
+
+  redis:
+    image: redis:latest
+    volumes:
+      - redis-data:/data
+      - ./redis/logs:/var/log/redis
+
+volumes:
+  mysql-data:
+  mongo-data:
+  redis-data:
